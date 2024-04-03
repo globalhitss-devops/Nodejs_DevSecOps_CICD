@@ -7,12 +7,7 @@ pipeline {
     }
     stages {
         
-        stage("Code"){
-            steps{
-                git url: "https://github.com/AjayK631/Nodejs_DevSecOps_CICD.git" , branch: "master"
-                echo "Code Cloned Successfully"
-            }
-        }
+    
         stage("SonarQube Analysis"){
             steps{
                withSonarQubeEnv("Sonar"){
