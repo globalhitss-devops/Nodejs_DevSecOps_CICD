@@ -63,12 +63,12 @@ pipeline {
         //     }
         // }
 
-        // stage('Docker Push') {
-        //     steps {
-        //         sh 'echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin'
-        //         }
-        //     }
-        // }
+        stage('Docker Push') {
+            steps {
+                sh 'echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin'
+                }
+            }
+        }
 
         // stage("Deploy"){
         //     steps{
