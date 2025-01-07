@@ -65,7 +65,7 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                sh "echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin"
+                sh 'echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin'
                 sh "docker tag node-app-batch-6:latest ${env.DOCKER_HUB_USR}/node-app-batch-6:latest"
                 sh "docker push ${env.DOCKER_HUB_USR}/node-app-batch-6:latest"
                 }
