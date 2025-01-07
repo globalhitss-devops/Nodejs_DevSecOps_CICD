@@ -39,12 +39,12 @@ pipeline {
         //     }
         // }
 
-        // stage("Build & Test"){
-        //     steps{
-        //         sh 'docker build -t node-app-batch-6:latest .'
-        //         echo "Code Built Successfully"
-        //     }
-        // }
+        stage("Build & Test"){
+            steps{
+                sh 'docker build -t node-app-batch-6:latest .'
+                echo "Code Built Successfully"
+            }
+        }
 
         // stage("Trivy"){
         //     steps{
@@ -52,10 +52,20 @@ pipeline {
         //     }
         // }
 
-        stage("Push to Private Docker Hub Repo"){
-            steps{
-                withCredentials([usernamePassword(credentialsId:"DockerHubCreds",passwordVariable:"dockerPass",usernameVariable:"dockerUser")]){
-                sh "docker login -u ${env.dockerUser} -p ${env.dockerPass}"
+        // stage("Push to Private Docker Hub Repo"){
+        //     steps{
+        //         withCredentials([usernamePassword(credentialsId:"DockerHubCreds",passwordVariable:"dockerPass",usernameVariable:"dockerUser")]){
+        //         sh "docker login -u ${env.dockerUser} -p ${env.dockerPass}"
+        //         sh "docker tag node-app-batch-6:latest ${env.dockerUser}/node-app-batch-6:latest"
+        //         sh "docker push ${env.dockerUser}/node-app-batch-6:latest"
+        //         }
+        //     }
+        // }
+
+        stage('Docker Push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                 sh "docker tag node-app-batch-6:latest ${env.dockerUser}/node-app-batch-6:latest"
                 sh "docker push ${env.dockerUser}/node-app-batch-6:latest"
                 }
