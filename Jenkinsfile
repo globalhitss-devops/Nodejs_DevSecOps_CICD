@@ -7,6 +7,7 @@ pipeline {
     environment {
         SONAR_TOKEN = credentials('global-sonar-token')
         DOJO_TOKEN = credentials('global-dojo-token')
+        DOCKER_HUB = credentials('docker-hub')
     }
 
     stages {
@@ -64,10 +65,9 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                sh "docker tag node-app-batch-6:latest ${env.dockerUser}/node-app-batch-6:latest"
-                sh "docker push ${env.dockerUser}/node-app-batch-6:latest"
+                sh "echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin"
+                sh "docker tag node-app-batch-6:latest ${env.DOCKER_HUB_USR}/node-app-batch-6:latest"
+                sh "docker push ${env.DOCKER_HUB_USR}/node-app-batch-6:latest"
                 }
             }
         }
