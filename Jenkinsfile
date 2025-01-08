@@ -78,7 +78,7 @@ pipeline {
             steps {
                 script {
                     echo "Testing the application URL: http://localhost:8000"
-                    def response = sh(script: "curl http://localhost:8000 --write-out %{http_code} --silent --output /dev/null", returnStdout: true).trim()
+                    def response = sh(script: "curl http://localhost:8000/todo --write-out %{http_code} --silent --output /dev/null", returnStdout: true).trim()
 
                     if (response == "200") {
                         echo "Application is up and running on http://localhost:8000"
