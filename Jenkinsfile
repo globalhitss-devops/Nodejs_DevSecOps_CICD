@@ -71,9 +71,6 @@ pipeline {
         //         echo "App Deployed Successfully"
         //     }
         // }
-    }
-    post{
-        always {
-        sh 'docker logout'
+        
     }
 }
