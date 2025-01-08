@@ -49,7 +49,10 @@ pipeline {
         stage("Trivy"){
             steps{
                 // sh "trivy image node-app-batch-6"
-                sh 'trivy -q -f json -o trivy-report.json node-app-batch-6:latest'
+                // sh 'trivy -q -f json -o trivy-report.json node-app-batch-6:latest'
+                // sh "trivy image node-app-batch-6:latest fs -f json > trivy-fs_report.json"
+                // sh '${TRIVY_HOST}/trivy image ${IMAGE_NAME} > scan.txt'
+                sh "trivy image -f json -o results.json node-app-batch-6:latest"
             }
         }
 
