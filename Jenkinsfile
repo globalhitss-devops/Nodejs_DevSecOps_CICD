@@ -68,10 +68,26 @@ pipeline {
         stage("Deploy"){
             steps{
                 sh "docker-compose down && docker-compose up -d"
+                echo "Waiting for the container to start..."
+                sleep(10)
                 echo "App Deployed Successfully"
             }
         }
 
+        stage('Test Application URL') {
+            steps {
+                script {
+                    echo "Testing the application URL: http://localhost:8000"
+                    def response = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://localhost:8000", returnStdout: true).trim()
+                    
+                    if (response == "200") {
+                        echo "Application is up and running on http://localhost:8000"
+                    } else {
+                        error "Application failed to start. HTTP response code: ${response}"
+                    }
+                }
+            }
+        }
     }
     post {
          always {
