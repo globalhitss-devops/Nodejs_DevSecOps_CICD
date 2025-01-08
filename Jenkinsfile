@@ -7,7 +7,7 @@ pipeline {
     environment {
         SONAR_TOKEN = credentials('global-sonar-token')
         DOJO_TOKEN = credentials('global-dojo-token')
-        DOCKER_HUB = credentials('docker-hub')
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub')
     }
 
     stages {
@@ -63,12 +63,12 @@ pipeline {
         //     }
         // }
 
-        stage('Docker Push') {
-            steps {
-                sh 'echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin'
-                }
-            }
-        }
+        stage('Login to Docker Hub') {      	
+            steps{                       	
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
+                echo 'Login Completed'      
+            }           
+        } 
 
         // stage("Deploy"){
         //     steps{
