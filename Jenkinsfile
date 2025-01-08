@@ -48,7 +48,8 @@ pipeline {
 
         stage("Trivy"){
             steps{
-                sh "trivy image node-app-batch-6"
+                // sh "trivy image node-app-batch-6"
+                sh 'trivy -q -f json -o trivy-report.json node-app-batch-6:latest'
             }
         }
 
