@@ -65,12 +65,12 @@ pipeline {
             }
         }
 
-        // stage("Deploy"){
-        //     steps{
-        //         sh "docker-compose down && docker-compose up -d"
-        //         echo "App Deployed Successfully"
-        //     }
-        // }
+        stage("Deploy"){
+            steps{
+                sh "docker-compose down && docker-compose up -d"
+                echo "App Deployed Successfully"
+            }
+        }
 
     }
     post {
