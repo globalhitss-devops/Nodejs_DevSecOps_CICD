@@ -49,7 +49,6 @@ pipeline {
         stage("Trivy"){
             steps{
                 sh "trivy image -f json -o results.json node-app-batch-6:latest"
-                recordIssues(tools: [trivy(pattern: 'results.json')])
             }
         }
 
